@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "unit-converter-pro": "^1.0.1"
-  },
-  "devDependencies": {},
   "scripts": {
+    "postinstall": "npm run download-data",
+    "download-data": "node src/scripts/download-data.js",
+    "update-db": "node src/scripts/update-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/WolfieZero/airport-api/issues"
   },
-  "homepage": "https://github.com/WolfieZero/airport-api#readme"
+  "homepage": "https://github.com/WolfieZero/airport-api#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "better-sqlite3": "^6.0.1",
+    "express": "^4.17.1",
+    "faker": "^4.1.0"
+  }
 }
