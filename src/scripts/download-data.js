@@ -8,10 +8,10 @@ const {
   COUNTRY_DATA_FILE,
 } = require('../config');
 
-const download = (url, file) => client.get(url)
-  .then(response => {
+const download = (url, file) =>
+  client.get(url).then(response => {
     const data = JSON.stringify(response.data);
-    fs.writeFileSync(file, data)
+    fs.writeFileSync(file, data);
   });
 
 download(AIRPORT_DATA_URL, AIRPORT_DATA_FILE);

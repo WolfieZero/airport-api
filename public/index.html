@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Airport API</title>
-</head>
-<body>
-  <h1>Foo Bar</h1>
-</body>
+<html lang="en_gb">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Airport API</title>
+      <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+      <style>
+          html, body {
+              background-color: #222;
+              color: #efefef;
+              font-family: 'Nunito', sans-serif;
+              font-weight: 200;
+              height: 100vh;
+              margin: 0;
+          }
+
+          .container {
+              height: 100vh;
+              align-items: center;
+              display: flex;
+              justify-content: center;
+              position: relative;
+          }
+
+          .content {
+              text-align: center;
+          }
+
+          .title {
+              font-size: 5em;
+              margin-bottom: 0.5em;
+          }
+
+          .links {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          .links > a {
+              color: #636b6f;
+              padding: 0 1.25em;
+              font-size: 0.8em;
+              font-weight: 600;
+              letter-spacing: .1rem;
+              text-decoration: none;
+              text-transform: uppercase;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="content">
+              <div class="title">
+                  Airport API
+              </div>
+              <div class="links">
+                  <a href="https://datahub.io/core/airport-codes">Data Source</a>
+                  <a href="/.netlify/functions/airports">View Data</a>
+              </div>
+          </div>
+      </div>
+  </body>
 </html>

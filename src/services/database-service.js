@@ -8,6 +8,6 @@ const databaseService = new Database(SQLITE_FILE, {
 
 databaseService.truncateFile = () => {
   fs.writeFileSync(SQLITE_FILE, '');
-}
+};
 
 module.exports = databaseService;

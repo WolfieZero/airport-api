@@ -1,6 +1,8 @@
 module.exports = {
-  AIRPORT_DATA_URL: 'https://datahub.io/core/airport-codes/r/airport-codes.json',
-  COUNTRY_DATA_URL: 'https://datahub.io/core/country-codes/r/country-codes.json',
+  AIRPORT_DATA_URL:
+    'https://datahub.io/core/airport-codes/r/airport-codes.json',
+  COUNTRY_DATA_URL:
+    'https://datahub.io/core/country-codes/r/country-codes.json',
   AIRPORT_DATA_FILE: `${__dirname}/../data/airports.json`,
   COUNTRY_DATA_FILE: `${__dirname}/../data/countries.json`,
   SQLITE_FILE: `${__dirname}/../data/airports.db`,
@@ -44,4 +46,7 @@ module.exports = {
     'IAH',
     'MIA',
   ],
-}
+  SERVER: {
+    PORT: 3000,
+  },
+};
