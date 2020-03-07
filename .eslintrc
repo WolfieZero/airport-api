@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "standard",
+    "prettier"
+  ],
+  "plugins": [
+    "standard",
+    "prettier"
+  ],
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-console": [
+      "error",
+      { "allow": ["info", "warn", "error", "debug"] }
+    ],
+    "prettier/prettier": "error"
+  }
+}
