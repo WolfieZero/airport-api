@@ -1,32 +1,29 @@
-const Sequelize = require('Sequelize');
+const { DataTypes } = require('Sequelize');
 const sequelize = require('../services/sequelize.service');
 
 const modelName = 'review';
 
 const attributes = {
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   rating: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   message: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
-  airport_id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
 };
 
-class ReviewModel extends Sequelize.Model {}
-ReviewModel.init(attributes, { sequelize, modelName });
+const ReviewModel = sequelize.define(modelName, attributes);
+// Seems to be a bug with the next line - https://github.com/sequelize/sequelize/issues/11985
+// ReviewModel.belongsTo(AirportModel);
 
 module.exports = ReviewModel;

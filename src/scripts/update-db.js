@@ -1,8 +1,6 @@
 const { AIRPORT_DATA_FILE, COUNTRY_DATA_FILE } = require('../config');
+const { AirportModel, CountryModel, ReviewModel } = require('../models');
 const sequelize = require('../services/sequelize.service');
-const AirportModel = require('../models/airport.model');
-const CountryModel = require('../models/country.model');
-const ReviewModel = require('../models/review.model');
 
 // Scrub the data clean
 sequelize.truncateFile();
@@ -25,14 +23,19 @@ AirportModel.sync({ force: true })
   .then(AirportModel.busyAirports)
   .then(busyAirports => {
     const reviews = require('./generate-reviews');
-    reviews.forEach(reivew => {
-      ReviewModel.create(
-        Object.assign(reivew, {
-          airport_id:
-            busyAirports[Math.floor(Math.random() * busyAirports.length)]
-              .dataValues.id,
-        })
-      );
+
+    const finished = [];
+    reviews.forEach(review => {
+      finished.push(ReviewModel.create(review));
+    });
+
+    return Promise.all(finished).then(createdReviews => {
+      // There's probably a better way to do this but it works for now...
+      const countBusyAirports = busyAirports.length;
+      createdReviews.forEach(createdReview => {
+        const index = Math.floor(Math.random() * countBusyAirports);
+        busyAirports[index].setReviews([createdReview]);
+      });
     });
   });
 
