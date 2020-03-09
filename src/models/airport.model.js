@@ -1,4 +1,4 @@
-const { DataTypes, Op, col } = require('Sequelize');
+const { DataTypes, Op } = require('Sequelize');
 const sequelize = require('../services/sequelize.service');
 const { BUSY_AIRPORTS } = require('../config');
 const ReviewModel = require('./review.model');
@@ -52,11 +52,11 @@ AirportModel.hasMany(ReviewModel);
  * @returns {Promise<Airport[]>}
  */
 AirportModel.getBusyAirports = () => {
-  const airports = BUSY_AIRPORTS.map(iata_code => ({ iata_code })); // eslint-disable-line camelcase
-
   const queryPromise = AirportModel.findAll({
     where: {
-      [Op.or]: airports,
+      iata_code: {
+        [Op.or]: BUSY_AIRPORTS,
+      },
     },
   });
 
@@ -69,19 +69,9 @@ AirportModel.getBusyAirports = () => {
  * @param {string | number} identifier Either an id, icao_code or ident
  * @returns {Promise<Airport>}
  */
-AirportModel.getAirportByIdentifier = (identifier, withReviews = false) => {
-  const include = [];
-  if (withReviews) {
-    include.push({
-      model: ReviewModel,
-      where: {
-        airport_id: col('airport.id'),
-      },
-    });
-  }
-
-  if (typeof identifier === 'number' && identifier > 0) {
-    return AirportModel.findByPk(identifier, { include });
+AirportModel.getAirportByIdentifier = identifier => {
+  if (identifier > 0) {
+    return AirportModel.findByPk(identifier);
   }
 
   const where = {};
@@ -98,7 +88,7 @@ AirportModel.getAirportByIdentifier = (identifier, withReviews = false) => {
       throw new Error('No valid identifier given (id, iata_code, ident)');
   }
 
-  const queryPromise = AirportModel.findOne({ where, include });
+  const queryPromise = AirportModel.findOne({ where });
   return queryPromise;
 };
 

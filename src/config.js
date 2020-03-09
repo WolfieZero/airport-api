@@ -6,7 +6,9 @@ module.exports = {
   AIRPORT_DATA_FILE: `${__dirname}/../data/airports.json`,
   COUNTRY_DATA_FILE: `${__dirname}/../data/countries.json`,
   SQLITE_FILE: `${__dirname}/../data/airports.db`,
-  NUMBER_OF_GENERATE_REVIEWS: 1000,
+  NUMBER_OF_GENERATE_REVIEWS: 100,
+  DEFAULT_LIMIT: 25,
+  MAX_LIMIT: 200,
   BUSY_AIRPORTS: [
     'ATL',
     'PEK',

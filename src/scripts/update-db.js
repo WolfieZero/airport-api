@@ -20,7 +20,7 @@ AirportModel.sync({ force: true })
     return Promise.all(finished);
   })
   .then(ReviewModel.sync({ force: true }))
-  .then(AirportModel.busyAirports)
+  .then(AirportModel.getBusyAirports)
   .then(busyAirports => {
     const reviews = require('./generate-reviews');
 
@@ -34,6 +34,7 @@ AirportModel.sync({ force: true })
       const countBusyAirports = busyAirports.length;
       createdReviews.forEach(createdReview => {
         const index = Math.floor(Math.random() * countBusyAirports);
+        // console.log(busyAirports[index].dataValues.name);
         busyAirports[index].setReviews([createdReview]);
       });
     });

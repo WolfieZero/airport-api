@@ -1,3 +1,5 @@
 module.exports = {
-  airports: require('./airports.controller'),
-}
+  AirportController: require('./airport.controller'),
+  CountryController: require('./country.controller'),
+  ReviewController: require('./review.controller'),
+};
