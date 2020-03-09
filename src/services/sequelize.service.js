@@ -2,9 +2,11 @@ const fs = require('fs');
 const Sequelize = require('sequelize');
 const { SQLITE_FILE } = require('../config');
 
+// @ts-ignore
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: SQLITE_FILE,
+  logging: false,
 });
 
 /**
