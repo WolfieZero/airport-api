@@ -16,11 +16,16 @@ const getAirports = async (request, response, next) => {
 };
 
 const getAirport = async (request, response, next) => {
-  const { params } = request;
+  const { airportIdentifier } = request.params;
+  const { include = '' } = request.query;
   try {
     const airport = await AirportModel.getAirportByIdentifier(
-      params.airportIdentifier
+      airportIdentifier
     );
+    const includes = include.split(',');
+    if (includes.includes('reviews')) {
+      airport.dataValues.reviews = await airport.getReviews();
+    }
     response.send(airport);
     next();
   } catch (error) {
@@ -36,7 +41,6 @@ const getReviews = async (request, response, next) => {
       airportIdentifier
     );
     const reviews = await airport.getReviews();
-    console.log({ reviews });
     response.send(reviews);
     next();
   } catch (error) {
