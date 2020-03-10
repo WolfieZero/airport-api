@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
   title: NPM_TITLE
-  description: NPM_DESCRIPTION
-  version: NPM_VERSION
+  description: 'NPM_DESCRIPTION'
+  version: 'NPM_VERSION'
 produces:
   - application/json
 paths:

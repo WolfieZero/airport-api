@@ -1,4 +1,5 @@
 const fs = require('fs');
+const yamljs = require('yamljs');
 const config = require('../config');
 const swaggerYml = fs.readFileSync(`${__dirname}/../swagger.yml`, 'utf8');
 
@@ -10,12 +11,25 @@ const replace = Object.assign(
   },
   config
 );
-let swagger = swaggerYml;
 
+let swagger = swaggerYml;
 for (const key of Object.keys(replace)) {
   swagger = swagger.replace(key, replace[key]);
 }
 
-fs.writeFileSync(`${__dirname}/../../public/swagger.yml`, swagger, {
+const json = yamljs.parse(swagger);
+const writeOptions = {
   encoding: 'utf8',
-});
+};
+
+fs.writeFileSync(
+  `${__dirname}/../../public/swagger.yml`,
+  swagger,
+  writeOptions
+);
+
+fs.writeFileSync(
+  `${__dirname}/../../public/swagger.json`,
+  JSON.stringify(json),
+  writeOptions
+);
