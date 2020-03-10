@@ -1,0 +1,57 @@
+swagger: '2.0'
+info:
+  title: NPM_TITLE
+  description: NPM_DESCRIPTION
+  version: NPM_VERSION
+produces:
+  - application/json
+paths:
+  '/api/airports':
+    get:
+      summary: Get all airports
+      parameters:
+        - in: query
+          name: records
+          description: Number of records to appear
+          type: integer
+          minimum: 1
+          maximum: MAX_LIMIT
+          default: DEFAULT_LIMIT
+        - in: query
+          name: page
+          description: Page number based on records
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Shows all airports within range
+  '/api/airports/{airportIdentifier}':
+    get:
+      summary: Get airport by indentifer
+      parameters:
+        - in: path
+          name: airportIdentifier
+          description: Display reviews
+          type: string
+          required: true
+        - in: query
+          name: includes
+          description: Add `reviews`
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Shows airport details with any included additional fields
+  '/api/airports/{airportIdentifier}/reviews':
+    get:
+      summary: Get airport's reviews
+      parameters:
+        - in: path
+          name: airportIdentifier
+          description: Display reviews
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Show all reviews related to a particular airport
