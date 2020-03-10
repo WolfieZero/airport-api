@@ -28,10 +28,18 @@ This assumes you have Node v10.\* installed
 ## Todo
 
 - [ ] REST API
+  - [x] Get request for all Airports
+  - [x] Get request for an Airport
+  - [x] Get request for an Airport with Reviews
   - [ ] Post request for Airport
   - [ ] Put reqeuest for Airport
+  - [x] Get request for all Coutries
+  - [x] Get request for a Coutry
+  - [x] Get request for all Reviews from Airport
+  - [ ] Get request for a Review
   - [ ] Put request for Review
 - [ ] Add GraphQL support
+- [ ] Add Swagger support
 
 [1]: https://datahub.io/
 [2]: https://github.com/marak/Faker.js/
