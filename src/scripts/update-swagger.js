@@ -14,7 +14,8 @@ const replace = Object.assign(
 
 let swagger = swaggerYml;
 for (const key of Object.keys(replace)) {
-  swagger = swagger.replace(key, replace[key]);
+  const find = new RegExp(key, 'g');
+  swagger = swagger.replace(find, replace[key]);
 }
 
 const json = yamljs.parse(swagger);
