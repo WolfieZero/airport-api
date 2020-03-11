@@ -1,6 +1,7 @@
 const fs = require('fs');
 const yamljs = require('yamljs');
-const config = require('../config');
+
+const config = require(`${__dirname}/../config`);
 const swaggerYml = fs.readFileSync(`${__dirname}/../swagger.yml`, 'utf8');
 
 const replace = Object.assign(

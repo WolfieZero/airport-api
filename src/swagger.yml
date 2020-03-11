@@ -5,53 +5,57 @@ info:
   version: 'NPM_VERSION'
 produces:
   - application/json
+components:
+  parameters:
+    records:
+      in: query
+      name: records
+      description: Number of records to appear
+      type: integer
+      minimum: 1
+      maximum: MAX_LIMIT
+      default: DEFAULT_LIMIT
+    page:
+      in: query
+      name: page
+      description: Page number based on records
+      type: integer
+      default: 0
+    airportIdentifier:
+      in: path
+      name: airportIdentifier
+      description: Either an id, iata_code or ident
+      type: string
+      required: true
 paths:
   '/api/airports':
     get:
       summary: Get all airports
       parameters:
-        - in: query
-          name: records
-          description: Number of records to appear
-          type: integer
-          minimum: 1
-          maximum: MAX_LIMIT
-          default: DEFAULT_LIMIT
-        - in: query
-          name: page
-          description: Page number based on records
-          type: integer
-          default: 0
+        - $ref: '#/components/parameters/records'
+        - $ref: '#/components/parameters/page'
       responses:
         '200':
           description: Shows all airports within range
   '/api/airports/{airportIdentifier}':
+    parameters:
+      - $ref: '#/components/parameters/airportIdentifier'
+      - in: query
+        name: includes
+        description: Add `reviews`
+        type: array
+        items:
+          type: string
     get:
       summary: Get airport by indentifer
-      parameters:
-        - in: path
-          name: airportIdentifier
-          description: Either an id, iata_code or ident
-          type: string
-          required: true
-        - in: query
-          name: includes
-          description: Add `reviews`
-          type: array
-          items:
-            type: string
       responses:
         '200':
           description: Shows airport details with any included additional fields
   '/api/airports/{airportIdentifier}/reviews':
+    parameters:
+      - $ref: '#/components/parameters/airportIdentifier'
     get:
       summary: Get airport's reviews
-      parameters:
-        - in: path
-          name: airportIdentifier
-          description: Either an id, iata_code or ident
-          type: string|number
-          required: true
       responses:
         '200':
           description: Show all reviews related to a particular airport
@@ -59,18 +63,8 @@ paths:
     get:
       summary: Get all countries
       parameters:
-        - in: query
-          name: records
-          description: Number of records to appear
-          type: integer
-          minimum: 1
-          maximum: MAX_LIMIT
-          default: DEFAULT_LIMIT
-        - in: query
-          name: page
-          description: Page number based on records
-          type: integer
-          default: 0
+        - $ref: '#/components/parameters/records'
+        - $ref: '#/components/parameters/page'
       responses:
         '200':
           description: Shows all countries within range
