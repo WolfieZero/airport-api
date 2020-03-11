@@ -24,6 +24,7 @@ This assumes you have Node v10.\* installed
 1. Run `npm run reset` in the root directory
 2. The SQLite database will be scrubbed clean and the data rebuilt with the
    latest dataset
+3. This will also update the Swagger docs
 
 ## Todo
 
@@ -38,8 +39,8 @@ This assumes you have Node v10.\* installed
   - [x] Get request for all Reviews from Airport
   - [ ] Get request for a Review
   - [ ] Put request for Review
-- [ ] Add GraphQL support
-- [ ] Add Swagger support
+- [ ] Add GraphQL support (express-graphql???)
+- [x] Add Swagger support
 
 [1]: https://datahub.io/
 [2]: https://github.com/marak/Faker.js/

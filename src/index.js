@@ -6,10 +6,12 @@ const { SERVER } = require('./config');
 const routes = require('./routes');
 const swaggerDocument = require('../public/swagger.json');
 
+require('./scripts/update-swagger');
+
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
 app.use('/api', routes);
