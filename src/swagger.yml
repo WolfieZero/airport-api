@@ -1,82 +1,141 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: NPM_TITLE
-  description: 'NPM_DESCRIPTION'
-  version: 'NPM_VERSION'
+  description: "NPM_DESCRIPTION"
+  version: "NPM_VERSION"
 produces:
   - application/json
-components:
-  parameters:
-    records:
-      in: query
-      name: records
-      description: Number of records to appear
-      type: integer
-      minimum: 1
-      maximum: MAX_LIMIT
-      default: DEFAULT_LIMIT
-    page:
-      in: query
-      name: page
-      description: Page number based on records
-      type: integer
-      default: 0
-    airportIdentifier:
-      in: path
-      name: airportIdentifier
-      description: Either an id, iata_code or ident
-      type: string
-      required: true
+parameters:
+  records:
+    in: query
+    name: records
+    description: Number of records to appear
+    type: integer
+    minimum: 1
+    maximum: MAX_LIMIT
+    default: DEFAULT_LIMIT
+  page:
+    in: query
+    name: page
+    description: Page number based on records
+    type: integer
+    default: 0
+  airportIdentifier:
+    in: path
+    name: airportIdentifier
+    description: Either an id, iata_code or ident
+    type: string
+    required: true
+  countryIdentifier:
+    in: path
+    name: countryIdentifier
+    description: Either an id, code or code_3
+    type: string
+    required: true
+  reviewIdentifier:
+    in: path
+    name: id
+    description: Review ID
+    type: number
+    required: true
 paths:
-  '/api/airports':
+  "/api/airports":
+    put:
+      summary: Add airport
+      tags:
+        - airports
+      responses:
+        "200":
+          description: Returns new airport
+        "400":
+          description: Client sent through the wrong data
     get:
       summary: Get all airports
+      tags:
+        - airports
       parameters:
-        - $ref: '#/components/parameters/records'
-        - $ref: '#/components/parameters/page'
+        - $ref: "#/parameters/records"
+        - $ref: "#/parameters/page"
       responses:
-        '200':
+        "200":
           description: Shows all airports within range
-  '/api/airports/{airportIdentifier}':
+  "/api/airports/{airportIdentifier}":
     parameters:
-      - $ref: '#/components/parameters/airportIdentifier'
+      - $ref: "#/parameters/airportIdentifier"
       - in: query
         name: includes
         description: Add `reviews`
         type: array
         items:
           type: string
+    post:
+      summary: Update airport
+      tags:
+        - airports
+      responses:
+        "200":
+          description: Returns new airport
     get:
       summary: Get airport by indentifer
+      tags:
+        - airports
       responses:
-        '200':
+        "200":
           description: Shows airport details with any included additional fields
-  '/api/airports/{airportIdentifier}/reviews':
+  "/api/airports/{airportIdentifier}/reviews":
     parameters:
-      - $ref: '#/components/parameters/airportIdentifier'
-    get:
-      summary: Get airport's reviews
+      - $ref: "#/parameters/airportIdentifier"
+    put:
+      summary: Add airport's review
+      tags:
+        - airports
+        - reviews
       responses:
-        '200':
+        "200":
+          description: Shows new airport review
+    get:
+      summary: Get all airport's reviews
+      tags:
+        - airports
+        - reviews
+      responses:
+        "200":
           description: Show all reviews related to a particular airport
-  '/api/countries':
+  "/api/countries":
     get:
       summary: Get all countries
+      tags:
+        - countries
       parameters:
-        - $ref: '#/components/parameters/records'
-        - $ref: '#/components/parameters/page'
+        - $ref: "#/parameters/records"
+        - $ref: "#/parameters/page"
       responses:
-        '200':
+        "200":
           description: Shows all countries within range
-  '/api/countries/{countryIdentifier}':
+  "/api/countries/{countryIdentifier}":
+    parameters:
+      - $ref: "#/parameters/countryIdentifier"
     get:
       summary: Get country by indentifer
-      parameters:
-        - in: path
-          name: countryIdentifier
-          description: Either an id, code or code_3
-          type: string|number
-          required: true
+      tags:
+        - countries
       responses:
-        '200':
+        "200":
           description: Shows country details
+  "/api/review/{reviewIdentifier}":
+    parameters:
+      - $ref: "#/parameters/reviewIdentifier"
+    get:
+      summary: Get reivew by ID
+      tags:
+        - reviews
+      responses:
+        "200":
+          description: Shows country details
+    delete:
+      summary: Delete reivew by ID
+      tags:
+        - reviews
+      responses:
+        "204":
+          description: Deleted succesfully
