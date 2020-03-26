@@ -20,27 +20,27 @@ parameters:
     description: Page number based on records
     type: integer
     default: 0
-  airportIdentifier:
+  airport_identifier:
     in: path
-    name: airportIdentifier
+    name: airport_identifier
     description: Either an id, iata_code or ident
     type: string
     required: true
-  countryIdentifier:
+  country_identifier:
     in: path
-    name: countryIdentifier
+    name: country_identifier
     description: Either an id, code or code_3
     type: string
     required: true
-  reviewIdentifier:
+  review_identifier:
     in: path
-    name: id
+    name: review_identifier
     description: Review ID
     type: number
     required: true
 paths:
   "/api/airports":
-    put:
+    post:
       summary: Add airport
       tags:
         - airports
@@ -59,16 +59,16 @@ paths:
       responses:
         "200":
           description: Shows all airports within range
-  "/api/airports/{airportIdentifier}":
+  "/api/airports/{airport_identifier}":
     parameters:
-      - $ref: "#/parameters/airportIdentifier"
+      - $ref: "#/parameters/airport_identifier"
       - in: query
         name: includes
         description: Add `reviews`
         type: array
         items:
           type: string
-    post:
+    put:
       summary: Update airport
       tags:
         - airports
@@ -82,9 +82,9 @@ paths:
       responses:
         "200":
           description: Shows airport details with any included additional fields
-  "/api/airports/{airportIdentifier}/reviews":
+  "/api/airports/{airport_identifier}/reviews":
     parameters:
-      - $ref: "#/parameters/airportIdentifier"
+      - $ref: "#/parameters/airport_identifier"
     put:
       summary: Add airport's review
       tags:
@@ -112,9 +112,9 @@ paths:
       responses:
         "200":
           description: Shows all countries within range
-  "/api/countries/{countryIdentifier}":
+  "/api/countries/{country_identifier}":
     parameters:
-      - $ref: "#/parameters/countryIdentifier"
+      - $ref: "#/parameters/country_identifier"
     get:
       summary: Get country by indentifer
       tags:
@@ -122,9 +122,9 @@ paths:
       responses:
         "200":
           description: Shows country details
-  "/api/review/{reviewIdentifier}":
+  "/api/review/{review_identifier}":
     parameters:
-      - $ref: "#/parameters/reviewIdentifier"
+      - $ref: "#/parameters/review_identifier"
     get:
       summary: Get reivew by ID
       tags:
