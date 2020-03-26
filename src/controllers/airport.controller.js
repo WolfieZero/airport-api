@@ -1,11 +1,36 @@
 const { AirportModel } = require('../models');
 const { DEFAULT_LIMIT, MAX_LIMIT } = require('../config');
 
+/**
+ * Add a airport.
+ */
+const addAirport = async (request, response, next) => {
+  let json = {};
+  let status = 500;
+
+  try {
+    json = await AirportModel.create(request.body);
+    status = 201;
+  } catch (error) {
+    json = {
+      error: 'Cannot add airport',
+      reason: error.message.split('\n'),
+    };
+    status = 400;
+  }
+
+  response.status(status).send(json);
+  next();
+};
+
+/**
+ * View all airports.
+ */
 const getAirports = async (request, response, next) => {
   const { records = DEFAULT_LIMIT, page = 0 } = request.query;
+  const limit = records > MAX_LIMIT ? MAX_LIMIT : records;
+  const offset = page * limit || 0;
   try {
-    const limit = records > MAX_LIMIT ? MAX_LIMIT : records;
-    const offset = page * limit || 0;
     const airports = await AirportModel.findAll({ limit, offset });
     response.send(airports);
     next();
@@ -15,6 +40,9 @@ const getAirports = async (request, response, next) => {
   }
 };
 
+/**
+ * Get a single airport.
+ */
 const getAirport = async (request, response, next) => {
   const { airportIdentifier } = request.params;
   const { include = '' } = request.query;
@@ -34,6 +62,29 @@ const getAirport = async (request, response, next) => {
   }
 };
 
+const updateAirport = async (request, response, next) => {
+  let json = {};
+  let status = 500;
+
+  try {
+    const airport = Object.assign({}, request.body);
+    json = await AirportModel.update({}, { where: { subject:  }})
+    status = 200;
+  } catch (error) {
+    json = {
+      error: 'Cannot add airport',
+      reason: error.message.split('\n'),
+    };
+    status = 400;
+  }
+
+  response.status(status).send(json);
+  next();
+};
+
+/**
+ * Get all reviews for an airport
+ */
 const getReviews = async (request, response, next) => {
   const { airportIdentifier } = request.params;
   try {
@@ -50,6 +101,8 @@ const getReviews = async (request, response, next) => {
 };
 
 module.exports = {
+  addAirport,
+  updateAirport,
   getAirports,
   getAirport,
   getReviews,
