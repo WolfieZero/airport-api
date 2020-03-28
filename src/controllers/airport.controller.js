@@ -41,7 +41,7 @@ const getAirports = async (request, response, next) => {
 };
 
 /**
- * Get a single airport.
+ * Get an airport.
  */
 const getAirport = async (request, response, next) => {
   const { airportIdentifier } = request.params;
@@ -62,14 +62,22 @@ const getAirport = async (request, response, next) => {
   }
 };
 
+/**
+ * Update an airport
+ */
 const updateAirport = async (request, response, next) => {
+  const { airportIdentifier } = request.params;
+
   let json = {};
   let status = 500;
 
   try {
-    const airport = Object.assign({}, request.body);
-    json = await AirportModel.update({}, { where: { subject:  }})
-    status = 200;
+    const airport = await AirportModel.getAirportByIdentifier(
+      airportIdentifier
+    );
+    const airportUpdate = Object.assign({}, request.body);
+    json = await airport.update(airportUpdate);
+    status = 202;
   } catch (error) {
     json = {
       error: 'Cannot add airport',
