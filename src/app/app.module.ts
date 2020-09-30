@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 // import { DatabaseModule } from './database';
 import { AirportsModule } from './airports';
 import { CountriesModule } from './countries';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConsoleModule } from 'nestjs-console';
 import { SQLITE_FILE } from '@config';
@@ -19,7 +17,7 @@ const database = SequelizeModule.forRoot({
 
 @Module({
   imports: [database, ConsoleModule, AirportsModule, CountriesModule, ReviewsModule],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
