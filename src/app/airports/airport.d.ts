@@ -1,6 +1,7 @@
 export type AirportIdentifier = string | number;
 
 export type AirportRaw = {
+  name: string;
   iata_code: string;
   type: string;
   continent: string;
@@ -12,5 +13,4 @@ export type AirportRaw = {
   iso_region: string;
   local_code: string;
   municipality: string;
-  name: string;
 };

@@ -1,31 +1,50 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { AirportIdentifier } from './airport';
 import { Airport } from './airport.model';
 import { AirportsService } from './airports.service';
+import { CreateAirportDto, UpdateAirportDto } from './dto';
 
 @Controller('api/airports')
 export class AirportsController {
   constructor(private readonly airportService: AirportsService) {}
 
   @Get()
-  list(@Query('page') page: string, @Query('reviews') reviews: string): Promise<Airport[]> {
-    const includeReviews = Number(reviews) === 1 ? true : false;
+  list(
+    @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: string,
+    @Query('reviews', new DefaultValuePipe(false), ParseBoolPipe) includeReviews: boolean
+  ): Promise<Airport[]> {
     return this.airportService.list(Number(page), includeReviews);
   }
 
   @Get(':identifier')
-  single(@Param('identifier') identifier: AirportIdentifier, @Query('reviews') reviews: string): Promise<Airport> {
-    const includeReviews = Number(reviews) === 1 ? true : false;
+  single(
+    @Param('identifier') identifier: AirportIdentifier,
+    @Query('reviews', new DefaultValuePipe(false), ParseBoolPipe) includeReviews: boolean
+  ): Promise<Airport> {
     return this.airportService.single(identifier, includeReviews);
   }
 
   @Post()
-  create(@Body() airport: Airport): Promise<Airport> {
-    return this.airportService.create(airport);
+  create(@Body() createAirportDto: CreateAirportDto): Promise<Airport> {
+    return this.airportService.create(createAirportDto);
   }
 
   @Put(':identifier')
-  update(@Param('identifier') identifier: AirportIdentifier, @Body() airport: Airport): Promise<Airport> {
-    return this.airportService.update(identifier, airport);
+  update(
+    @Param('identifier') identifier: AirportIdentifier,
+    @Body() updateAirportDto: UpdateAirportDto
+  ): Promise<Airport> {
+    return this.airportService.update(identifier, updateAirportDto);
   }
 }

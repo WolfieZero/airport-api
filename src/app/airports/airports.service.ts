@@ -5,6 +5,7 @@ import { Airport } from './airport.model';
 import { AIRPORT_DATA_URL, AIRPORT_DATA_FILE, DEFAULT_LIMIT } from '@config';
 import { downloadFile } from '@lib/download-file';
 import { Review } from '@app/reviews/review.model';
+import { CreateAirportDto, UpdateAirportDto } from './dto';
 
 @Injectable()
 export class AirportsService {
@@ -32,15 +33,13 @@ export class AirportsService {
     return airport;
   }
 
-  async create(airport: Airport): Promise<Airport> {
-    const createdAirport = this.airportModel.create(airport);
-    return createdAirport;
+  async create(createAirportDto: CreateAirportDto): Promise<Airport> {
+    return this.airportModel.create(createAirportDto);
   }
 
-  async update(identifier: AirportIdentifier, airport: Airport): Promise<Airport> {
-    const currentAirport = await this.airportModel.findByIdentifier(identifier);
-    const updatedAirport = currentAirport.update(airport);
-    return updatedAirport;
+  async update(identifier: AirportIdentifier, updateAirportDto: UpdateAirportDto): Promise<Airport> {
+    const airport = await this.airportModel.findByIdentifier(identifier);
+    return airport.update(updateAirportDto);
   }
 
   async download(): Promise<void> {

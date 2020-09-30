@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Review } from './review.model';
 import { NUMBER_OF_GENERATE_REVIEWS } from '@config';
 import { name, internet, lorem } from 'faker';
+import { CreateReviewDto } from './dto';
 
 @Injectable()
 export class ReviewsService {
@@ -18,8 +19,8 @@ export class ReviewsService {
     return this.reviewModel.findByPk(id);
   }
 
-  async create(review: Review): Promise<Review> {
-    const createdReview = this.reviewModel.create(review);
+  async create(createReviewDto: CreateReviewDto): Promise<Review> {
+    const createdReview = this.reviewModel.create(createReviewDto);
     return createdReview;
   }
 
