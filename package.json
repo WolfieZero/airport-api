@@ -1,5 +1,6 @@
 {
   "name": "airport-api",
+  "title": "Airport API",
   "version": "0.0.1",
   "description": "Airport data API",
   "author": {
@@ -13,6 +14,7 @@
     "console": "node dist/console.js",
     "console:dev": "ts-node -r tsconfig-paths/register src/console.ts",
     "reset": "npm run console -- airports:download; npm run console -- countries:download; npm run console -- airports:refresh; npm run console -- countries:refresh; npm run console -- reviews:refresh",
+    "refresh": "npm run reset",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "postbuild": "npm run reset",
