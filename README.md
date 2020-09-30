@@ -14,6 +14,7 @@ data set from [DataHub][1]... and geuine [Faker][2] reviews 😉
 - [x] Swagger
 - [ ] Unit tests
 - [ ] E2E tests
+- [ ] GraphQL
 
 ## Usage
 
