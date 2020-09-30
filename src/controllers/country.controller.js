@@ -1,6 +1,13 @@
 const { CountryModel } = require('../models');
 const { DEFAULT_LIMIT, MAX_LIMIT } = require('../config');
 
+/**
+ * ...
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
+ */
 const getCountries = async (request, response, next) => {
   const { records = DEFAULT_LIMIT, page = 0 } = request.query;
   try {
@@ -15,12 +22,17 @@ const getCountries = async (request, response, next) => {
   }
 };
 
+/**
+ * ...
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
+ */
 const getCountry = async (request, response, next) => {
   const { countryIdentifier } = request.params;
   try {
-    const airport = await CountryModel.getCountryByIdentifier(
-      countryIdentifier
-    );
+    const airport = await CountryModel.getCountryByIdentifier(countryIdentifier);
     response.send(airport);
     next();
   } catch (error) {

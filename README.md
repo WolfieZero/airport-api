@@ -30,6 +30,13 @@ This assumes you have Node v10.\* installed
 
 [See the Trello board](https://trello.com/b/eSZtTMrr/airport-codes)
 
+## Data Sources
+
+https://aviation.stackexchange.com/questions/39745/how-to-programmatically-access-aip-data-metar-taf-notams
+https://www.icao.int/safety/iStars/Pages/Get-NOTAM-Data.aspx
+https://avwx.rest/
+https://aviationweather.gov/dataserver
+
 ## Resources
 
 - [Sequelize][3] - ORM solution

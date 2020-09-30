@@ -1,110 +1,90 @@
+const { renderer } = require('../helpers');
 const { AirportModel } = require('../models');
 const { DEFAULT_LIMIT, MAX_LIMIT } = require('../config');
 
 /**
  * Add a airport.
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
  */
 const addAirport = async (request, response, next) => {
-  let json = {};
-  let status = 500;
+  const render = renderer(response, next);
 
   try {
-    json = await AirportModel.create(request.body);
-    status = 201;
+    const airport = await AirportModel.create(request.body);
+    render.accepted(airport);
   } catch (error) {
-    json = {
-      error: 'Cannot add airport',
-      reason: error.message.split('\n'),
-    };
-    status = 400;
+    render.error('Cannot add airport', error);
   }
-
-  response.status(status).send(json);
-  next();
 };
 
 /**
  * View all airports.
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
  */
 const getAirports = async (request, response, next) => {
+  const render = renderer(response, next);
   const { records = DEFAULT_LIMIT, page = 0 } = request.query;
   const limit = records > MAX_LIMIT ? MAX_LIMIT : records;
   const offset = page * limit || 0;
+
   try {
     const airports = await AirportModel.findAll({ limit, offset });
-    response.send(airports);
-    next();
+    render.ok(airports);
   } catch (error) {
-    console.error(error.message);
-    response.sendStatus(500) && next(error);
+    render.error('Cannot get airports', error);
   }
 };
 
 /**
  * Get an airport.
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
  */
 const getAirport = async (request, response, next) => {
+  const render = renderer(response, next);
   const { airportIdentifier } = request.params;
   const { include = '' } = request.query;
+
   try {
-    const airport = await AirportModel.getAirportByIdentifier(
-      airportIdentifier
-    );
+    const airport = await AirportModel.getAirportByIdentifier(airportIdentifier);
     const includes = include.split(',');
+
     if (includes.includes('reviews')) {
       airport.dataValues.reviews = await airport.getReviews();
     }
-    response.send(airport);
-    next();
+
+    render.ok(airport);
   } catch (error) {
-    response.sendStatus(404);
-    next(error);
+    render.notFound(`Cannot find airport with identifier "${airportIdentifier}"`, error);
   }
 };
 
 /**
  * Update an airport
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
  */
 const updateAirport = async (request, response, next) => {
+  const render = renderer(response, next);
   const { airportIdentifier } = request.params;
 
-  let json = {};
-  let status = 500;
-
   try {
-    const airport = await AirportModel.getAirportByIdentifier(
-      airportIdentifier
-    );
+    const airport = await AirportModel.getAirportByIdentifier(airportIdentifier);
     const airportUpdate = Object.assign({}, request.body);
-    json = await airport.update(airportUpdate);
-    status = 202;
+    const updatedAirport = await airport.update(airportUpdate);
+    render.accepted(updatedAirport);
   } catch (error) {
-    json = {
-      error: 'Cannot add airport',
-      reason: error.message.split('\n'),
-    };
-    status = 400;
-  }
-
-  response.status(status).send(json);
-  next();
-};
-
-/**
- * Get all reviews for an airport
- */
-const getReviews = async (request, response, next) => {
-  const { airportIdentifier } = request.params;
-  try {
-    const airport = await AirportModel.getAirportByIdentifier(
-      airportIdentifier
-    );
-    const reviews = await airport.getReviews();
-    response.send(reviews);
-    next();
-  } catch (error) {
-    console.error(error.message);
-    response.sendStatus(500) && next(error);
+    render.error('Cannot add airport', error);
   }
 };
 
@@ -113,5 +93,4 @@ module.exports = {
   updateAirport,
   getAirports,
   getAirport,
-  getReviews,
 };

@@ -1,20 +1,44 @@
-const { AirportModel } = require('../models');
+const { renderer } = require('../helpers');
+const { AirportModel, ReviewModel } = require('../models');
 
-const getReviews = async (request, response, next) => {
-  const { airportIdentifier } = request.params;
+/**
+ * Add a airport.
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
+ */
+const addReview = async (request, response, next) => {
+  const render = renderer(response, next);
+
   try {
-    const reviews = await AirportModel.getAirportByIdentifier(
-      airportIdentifier,
-      true
-    );
-    response.send(reviews);
-    next();
+    const review = await ReviewModel.create(request.body);
+    render.accepted(review);
   } catch (error) {
-    console.error(error.message);
-    response.sendStatus(500) && next(error);
+    render.error('Cannot add review', error);
   }
 };
 
+/**
+ * Get all reviews for an airport
+ *
+ * @param {object} request Incoming request
+ * @param {object} response Server response
+ * @param {function} next Pass control to the next handler
+ */
+const getReviews = async (request, response, next) => {
+  const render = renderer(response, next);
+  const { airportIdentifier } = request.params;
+
+  try {
+    const airport = await AirportModel.getAirportByIdentifier(airportIdentifier);
+    const reviews = await airport.getReviews();
+    render.ok(reviews);
+  } catch (error) {
+    render.badRequest('...', error);
+  }
+};
 module.exports = {
+  addReview,
   getReviews,
 };

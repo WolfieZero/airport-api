@@ -8,9 +8,7 @@ sequelize.truncateFile();
 AirportModel.sync({ force: true })
   .then(() => {
     const airports = require(AIRPORT_DATA_FILE);
-    const filteredAirports = airports.filter(
-      airport => airport.iata_code && airport.iata_code.length === 3
-    );
+    const filteredAirports = airports.filter(airport => airport.iata_code && airport.iata_code.length === 3);
 
     const finished = [];
     filteredAirports.forEach(airport => {
@@ -43,8 +41,7 @@ AirportModel.sync({ force: true })
 CountryModel.sync({ force: true }).then(() => {
   const countries = require(COUNTRY_DATA_FILE);
   const filteredCountries = countries.filter(
-    country =>
-      country['ISO3166-1-Alpha-2'] && country['ISO3166-1-Alpha-2'].length === 2
+    country => country['ISO3166-1-Alpha-2'] && country['ISO3166-1-Alpha-2'].length === 2
   );
 
   filteredCountries.forEach(country => {

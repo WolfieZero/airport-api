@@ -1,5 +1,7 @@
-const { DataTypes } = require('Sequelize');
+const { DataTypes, Model } = require('Sequelize');
+
 const sequelize = require('../services/sequelize.service');
+const { AirportModel } = require('../models');
 
 const modelName = 'review';
 
@@ -22,8 +24,18 @@ const attributes = {
   },
 };
 
-const ReviewModel = sequelize.define(modelName, attributes);
+// const ReviewModel = sequelize.define(modelName, attributes);
+class ReviewModel extends Model {
+  static init() {
+    return super.init(attributes, { sequelize });
+  }
+
+  static associate(models) {
+    this.airport = this.belongsTo(AirportModel);
+  }
+}
+ReviewModel.init();
 // Seems to be a bug with the next line - https://github.com/sequelize/sequelize/issues/11985
-// ReviewModel.belongsTo(AirportModel);
+// ReviewModel.belongsTo(AirportModel, { as: 'source' });
 
 module.exports = ReviewModel;
