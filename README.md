@@ -5,18 +5,15 @@ data set from [DataHub][1]... and geuine [Faker][2] reviews 😉
 
 ## Features
 
-- Automatic data creation
-- RESTful API
-- Easy scrub and restore
-- Airport endpoints - create, read (single and list), update and delete
-- Country endpoints - read (single and list)
-- Review endpoints - create, read (single) and delete
-
-### Missing
-
-- Swagger
-- Unit tests
-- E2E tests
+- [x] Automatic data creation
+- [x] RESTful API
+- [x] Easy scrub and restore
+- [x] Airport endpoints - create, read (single and list), update and delete
+- [x] Country endpoints - read (single and list)
+- [x] Review endpoints - create, read (single) and delete
+- [x] Swagger
+- [ ] Unit tests
+- [ ] E2E tests
 
 ## Usage
 
