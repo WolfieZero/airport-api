@@ -13,7 +13,7 @@ export class Review extends Model<Review> {
   rating!: number;
 
   @Column(DataType.TEXT)
-  body?: string;
+  body!: string;
 
   @ForeignKey(() => Airport)
   @Column

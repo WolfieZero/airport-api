@@ -14,10 +14,10 @@ export class Country extends Model<Country> {
   code3!: string;
 
   @Column(DataType.TEXT)
-  region?: string;
+  region!: string;
 
   @Column(DataType.TEXT)
-  subReigion?: string;
+  subReigion!: string;
 
   static findByIdentifier(identifier: CountryIdentifier): Promise<Country> {
     if (Number(identifier) > 0) {

@@ -4,7 +4,6 @@ import { FindOptions, Op } from 'sequelize';
 import { WhereOptions } from 'sequelize/types';
 import { AirportIdentifier } from './airport';
 import { BUSY_AIRPORTS } from '@config';
-import { option } from 'commander';
 
 @Table
 export class Airport extends Model<Airport> {
@@ -18,7 +17,7 @@ export class Airport extends Model<Airport> {
   ident!: string;
 
   @Column(DataType.CHAR(2))
-  isoCountry?: string;
+  isoCountry!: string;
 
   @Column(DataType.TEXT)
   municipality!: string;
@@ -30,7 +29,7 @@ export class Airport extends Model<Airport> {
   coordinates!: string;
 
   @HasMany(() => Review)
-  reviews?: Review[];
+  reviews!: Review[];
 
   static findByIdentifier(identifier: AirportIdentifier, options?: FindOptions): Promise<Airport> {
     if (Number(identifier) > 0) {
