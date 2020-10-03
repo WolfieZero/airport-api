@@ -10,6 +10,9 @@
   },
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">10.0.0"
+  },
   "scripts": {
     "console": "node dist/console.js",
     "console:dev": "ts-node -r tsconfig-paths/register src/console.ts",
